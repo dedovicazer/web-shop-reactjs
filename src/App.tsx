@@ -1,9 +1,10 @@
-import React from 'react';
+import * as React from 'react';
+import Products from './components/Products';
 
 function App() {
   return (
     <div className="App">
-      E-commerce
+      <Products/>
     </div>
   );
 }
