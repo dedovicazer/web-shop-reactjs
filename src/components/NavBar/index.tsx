@@ -5,9 +5,12 @@ import Logo from "../../assets/commere.jpg";
 import useStyles from "./styles";
 import {ShoppingCart} from "@material-ui/icons";
 
-type Props = {};
+type Props = {
+    totalItems: number
+};
 
-const NavBar: FC<Props> = (props: Props): JSX.Element => {
+const NavBar: FC<Props> = ({ totalItems }): JSX.Element => {
+    console.log(totalItems)
     const classes = useStyles()
     return (
         <>
@@ -20,7 +23,7 @@ const NavBar: FC<Props> = (props: Props): JSX.Element => {
                     <div className={classes.grow}/>
                     <div>
                         <IconButton aria-label={"Show cart items"} color={"inherit"}>
-                            <Badge badgeContent={2} color="secondary">
+                            <Badge badgeContent={totalItems} color="secondary">
                                 <ShoppingCart />
                             </Badge>
                         </IconButton>

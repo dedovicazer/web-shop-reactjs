@@ -8,10 +8,11 @@ import {AddShoppingCart} from "@material-ui/icons";
 
 type Props = {
     product: ProductType
+    onAddToCart: any
 };
 
 
-const Product: FC<Props> = ({product}): JSX.Element => {
+const Product: FC<Props> = ({product, onAddToCart}): JSX.Element => {
     const classes = useStyles()
     return (
         <Card className={classes.root}>
@@ -28,7 +29,7 @@ const Product: FC<Props> = ({product}): JSX.Element => {
                 <Typography dangerouslySetInnerHTML={{ __html: product.description }} variant="body2" color="textSecondary" component="p" />
             </CardContent>
             <CardActions disableSpacing className={classes.cardActions}>
-                <IconButton aria-label="Add to Cart" >
+                <IconButton aria-label="Add to Cart"  onClick={ ()=>{ onAddToCart(product.id, 1) } }>
                     <AddShoppingCart />
                 </IconButton>
             </CardActions>
