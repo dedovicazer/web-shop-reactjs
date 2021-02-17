@@ -5,8 +5,8 @@ import {useEffect, useState} from "react";
 import {commerce} from "./lib/commerce";
 
 function App() {
-    const [ products, setProducts ] = useState([]);
-    const [cart, setCart] = useState<any>({});
+    const [ products, setProducts ] = useState<ProductType[]>([]);
+    const [cart, setCart] = useState<CartType>({total_items: 0});
 
     const fetchProducts = async () => {
         const { data } = await commerce.products.list();
@@ -16,8 +16,6 @@ function App() {
     const fetchCart: any = async () => {
         setCart(await commerce.cart.retrieve())
     }
-
-    console.log(cart)
 
     const addToCard = async (productId: string, quantity: number) => {
             const item = await commerce.cart.add(productId, quantity)

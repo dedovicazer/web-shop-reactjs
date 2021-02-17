@@ -9,7 +9,7 @@ import {commerce} from "../../lib/commerce";
 
 type Props = {
     products: ProductType[]
-    onAddToCart: any
+    onAddToCart: (id: string, quantity: number) => void
 };
 
 const Products: FC<Props> = ({ products, onAddToCart }): JSX.Element => {

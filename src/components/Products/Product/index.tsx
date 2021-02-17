@@ -8,7 +8,7 @@ import {AddShoppingCart} from "@material-ui/icons";
 
 type Props = {
     product: ProductType
-    onAddToCart: any
+    onAddToCart: (id: string, quantity: number) => void
 };
 
 
