@@ -1,9 +1,10 @@
 import * as React from 'react';
-import {Products, NavBar, Cart} from './components';
+import {Products, NavBar, Cart, Checkout} from './components';
 import {CartType, ProductType} from "./components/Products/types";
 import {useEffect, useState} from "react";
 import {commerce} from "./lib/commerce";
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
+
 
 function App() {
     const [products, setProducts] = useState<ProductType[]>([]);
@@ -52,8 +53,12 @@ function App() {
                         <Products products={products} onAddToCart={addToCard}/>
                     </Route>
 
-                    <Route>
+                    <Route exact path="/cart">
                         <Cart cart={cart} UpdateCartQuantity={UpdateCartQuantity} RemoveCart={RemoveCart} onEmptyCart={onEmptyCart}/>
+                    </Route>
+
+                    <Route exact path="/checkout">
+                        <Checkout />
                     </Route>
                 </Switch>
             </div>

@@ -4,7 +4,7 @@ import {Button, Grid, Typography} from "@material-ui/core";
 import {CartType} from "../../Products/types";
 import useStyles from "../styles"
 import CartItem from "../CartItem";
-import {Cart} from "../../index";
+import {Link} from "react-router-dom";
 
 type Props = {
     cart: CartType
@@ -30,7 +30,7 @@ const  FilledCart: FC<Props> = ({cart,UpdateCartQuantity, RemoveCart, onEmptyCar
                 </Typography>
                 <div>
                     <Button className={classes.emptyButton} size="large" type="button" variant="contained" color="secondary" onClick={onEmptyCart}>Empty Cart</Button>
-                    <Button className={classes.checkoutButton} size="large" type="button" variant="contained" color="primary">Checkout</Button>
+                    <Button className={classes.checkoutButton} component={Link} to="/checkout" size="large" type="button" variant="contained" color="primary">Checkout</Button>
                 </div>
             </div>
         </>
