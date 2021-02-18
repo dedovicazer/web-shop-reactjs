@@ -7,10 +7,13 @@ import {CartType} from "../Products/types";
 
 type Props = {
     cart: CartType
-
+    UpdateCartQuantity: (productId: string, quantity: number) => void
+    RemoveCart: (productId: string) => void
+    onEmptyCart: () => void
 };
 
-const Cart: FC<Props> = ({cart}): JSX.Element => {
+
+const Cart: FC<Props> = ({cart, UpdateCartQuantity, RemoveCart, onEmptyCart }): JSX.Element => {
     const classes = useStyles()
 
     if(!cart.line_items) return <>"Loading..."</>
@@ -19,7 +22,7 @@ const Cart: FC<Props> = ({cart}): JSX.Element => {
         <Container>
             <div className={classes.toolbar}/>
             <Typography className={classes.title} variant="h3">Your shopping cart </Typography>
-            {!cart.line_items.length ? <EmptyCart/> : <FilledCart cart={cart}/>}
+            {!cart.line_items.length ? <EmptyCart/> : <FilledCart cart={cart} UpdateCartQuantity={UpdateCartQuantity} RemoveCart={RemoveCart} onEmptyCart={onEmptyCart}/>}
         </Container>
     )
 }

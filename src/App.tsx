@@ -14,8 +14,23 @@ function App() {
         setProducts(data)
     }
 
-    const fetchCart: any = async () => {
+    const fetchCart = async () => {
         setCart(await commerce.cart.retrieve())
+    }
+
+    const UpdateCartQuantity = async (productId: string, quantity: number) => {
+        const { cart } = await commerce.cart.update(productId, { quantity })
+        setCart(cart)
+    }
+
+    const RemoveCart = async (productId: string) => {
+        const { cart } = await  commerce.cart.remove(productId)
+        setCart(cart)
+    }
+
+    const onEmptyCart = async () => {
+        const { cart } = await  commerce.cart.empty()
+        setCart(cart)
     }
 
     const addToCard = async (productId: string, quantity: number) => {
@@ -38,7 +53,7 @@ function App() {
                     </Route>
 
                     <Route>
-                        <Cart cart={cart}/>
+                        <Cart cart={cart} UpdateCartQuantity={UpdateCartQuantity} RemoveCart={RemoveCart} onEmptyCart={onEmptyCart}/>
                     </Route>
                 </Switch>
             </div>

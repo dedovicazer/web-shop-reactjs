@@ -6,9 +6,11 @@ import {CartType, ProductType} from "../../Products/types";
 
 type Props = {
     item: ProductType
+    UpdateCartQuantity: (productId: string, quantity: number) => void
+    RemoveCart: (productId: string) => void
 };
 
-const  CartItem: FC<Props> = ({item}): JSX.Element => {
+const  CartItem: FC<Props> = ({item, UpdateCartQuantity, RemoveCart}): JSX.Element => {
     const classes = useStyles()
     return (
         <Card>
@@ -20,12 +22,12 @@ const  CartItem: FC<Props> = ({item}): JSX.Element => {
 
             <CardActions className={classes.cartActions}>
                 <div className={classes.buttons}>
-                    <Button type="button" size="small" >-</Button>
+                    <Button type="button" size="small" onClick={() => UpdateCartQuantity(item.id, item.quantity - 1)}>-</Button>
                     <Typography>{item.quantity}</Typography>
-                    <Button type="button" size="small" >+</Button>
+                    <Button type="button" size="small" onClick={() => UpdateCartQuantity(item.id, item.quantity + 1)}>+</Button>
                 </div>
 
-                <Button variant="contained" type="button" color="secondary">Remove</Button>
+                <Button variant="contained" type="button" color="secondary" onClick={() => RemoveCart(item.id)}>Remove</Button>
             </CardActions>
         </Card>
     )
