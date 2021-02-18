@@ -1,15 +1,16 @@
 import * as React from 'react';
-import {Products, NavBar} from './components';
+import {Products, NavBar, Cart} from './components';
 import {CartType, ProductType} from "./components/Products/types";
 import {useEffect, useState} from "react";
 import {commerce} from "./lib/commerce";
+import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 
 function App() {
-    const [ products, setProducts ] = useState<ProductType[]>([]);
-    const [cart, setCart] = useState<CartType>({total_items: 0});
+    const [products, setProducts] = useState<ProductType[]>([]);
+    const [cart, setCart] = useState<any>({total_items: 0});
 
     const fetchProducts = async () => {
-        const { data } = await commerce.products.list();
+        const {data} = await commerce.products.list();
         setProducts(data)
     }
 
@@ -18,21 +19,31 @@ function App() {
     }
 
     const addToCard = async (productId: string, quantity: number) => {
-            const item = await commerce.cart.add(productId, quantity)
-            setCart(item.cart);
+        const item = await commerce.cart.add(productId, quantity)
+        setCart(item.cart);
     }
-
     useEffect(() => {
         fetchProducts()
         fetchCart()
     }, [])
 
-  return (
-    <div className="App">
-        <NavBar  totalItems={cart.total_items}/>
-        <Products products={products} onAddToCart={addToCard}/>
-    </div>
-  );
+    return (
+
+        <Router>
+            <div className="App">
+                <NavBar totalItems={cart.total_items}/>
+                <Switch>
+                    <Route exact path="/">
+                        <Products products={products} onAddToCart={addToCard}/>
+                    </Route>
+
+                    <Route>
+                        <Cart cart={cart}/>
+                    </Route>
+                </Switch>
+            </div>
+        </Router>
+    );
 }
 
 export default App;
