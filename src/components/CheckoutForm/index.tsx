@@ -1,24 +1,29 @@
 import * as React from 'react';
-import {FC, useState} from "react";
+import {FC, useEffect, useState} from "react";
 import {Paper, Stepper, Step, StepLabel, Typography, CircularProgress, Divider, Button} from '@material-ui/core'
 import useStyles from "./styles"
-import {Payment} from "@material-ui/icons";
-import AdressForm from "./AdressForm";
+import AdressForm from "./AddressForm";
 import PaymentForm from "./PaymentForm";
 import Conformation from "./Conformation";
+import {CartType} from "../Products/types";
 
 type Props = {
-
+    generateToken: (id: string) => void
+    cart: CartType
 };
 
 const steps = [ "Shipping address", "Payment details" ];
 
-const  CheckoutForm: FC<Props> = (): JSX.Element => {
+const  CheckoutForm: FC<Props> = ({ generateToken, cart }): JSX.Element => {
 
     const Form = () => activeStep === 0 ? <AdressForm /> : <PaymentForm/>
 
-    const [ activeStep, setActiveStep ] = useState(1)
+    const [ activeStep, setActiveStep ] = useState(0)
     const classes = useStyles()
+
+    useEffect(() => {
+        generateToken(cart.id)
+    }, [cart])
 
     return (
         <>

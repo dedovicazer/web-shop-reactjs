@@ -11,7 +11,6 @@ type Props = {
 };
 
 const NavBar: FC<Props> = ({ totalItems }): JSX.Element => {
-    console.log(totalItems)
     const classes = useStyles()
     const location = useLocation()
 

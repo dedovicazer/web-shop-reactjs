@@ -8,7 +8,28 @@ import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 
 function App() {
     const [products, setProducts] = useState<ProductType[]>([]);
-    const [cart, setCart] = useState<any>({total_items: 0});
+    const [cart, setCart] = useState<any>({});
+
+    const [token, setToken] = useState<any>({});
+
+    // Select Fields Data
+    const [countries, setCountries] = useState([]);
+    const [country, setCountry] = useState("");
+
+    const fetchCountries = async () => {
+        const { countries } = await commerce.products.list();
+        setCountries(countries)
+    }
+
+    const generateToken = async (id: string) => {
+        try {
+            const token = await commerce.checkout.generateToken(id, {type: 'cart'})
+            setToken(token)
+
+        } catch (error) {
+            console.log('There was an error in generating a token', error);
+        }
+    }
 
     const fetchProducts = async () => {
         const {data} = await commerce.products.list();
@@ -58,7 +79,7 @@ function App() {
                     </Route>
 
                     <Route exact path="/checkout">
-                        <Checkout />
+                        <Checkout generateToken={generateToken}  cart={cart}/>
                     </Route>
                 </Switch>
             </div>
