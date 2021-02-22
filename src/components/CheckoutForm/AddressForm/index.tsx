@@ -1,14 +1,21 @@
 import * as React from 'react';
-import {FC} from "react";
+import {FC, useEffect} from "react";
 import {useForm, FormProvider} from "react-hook-form";
 import {Grid} from "@material-ui/core";
 import InputText from "../InputText";
 import SelectField from "../SelectField";
 
-type Props = {};
+type Props = {
+    fetchCountries: () => void
+    token: any
+};
 
-const AddressForm: FC<Props> = (): JSX.Element => {
+const AddressForm: FC<Props> = (fetchCountries, token): JSX.Element => {
     const methods = useForm()
+
+    useEffect(()=> {
+        fetchCountries(token.id)
+    }, [])
 
     return (
         <>
@@ -21,7 +28,7 @@ const AddressForm: FC<Props> = (): JSX.Element => {
                         <InputText name="email" label="Email" />
                         <InputText name="city" label="City" />
                         <InputText name="zip" label="ZIP / Postal code" />
-                        {/*<SelectField title="Country" />*/}
+                        <SelectField title="Country" />
                         {/*<SelectField title="Subdivision" />*/}
                         {/*<SelectField title="Options" />*/}
                     </Grid>

@@ -10,13 +10,15 @@ import {CartType} from "../Products/types";
 type Props = {
     generateToken: (id: string) => void
     cart: CartType
+    fetchCountries: () => void
+    token: any
 };
 
 const steps = [ "Shipping address", "Payment details" ];
 
-const  CheckoutForm: FC<Props> = ({ generateToken, cart }): JSX.Element => {
+const  CheckoutForm: FC<Props> = ({ generateToken, cart, token, fetchCountries }): JSX.Element => {
 
-    const Form = () => activeStep === 0 ? <AdressForm /> : <PaymentForm/>
+    const Form = () => activeStep === 0 ? <AdressForm token={token} fetchCountries={fetchCountries}/> : <PaymentForm/>
 
     const [ activeStep, setActiveStep ] = useState(0)
     const classes = useStyles()
@@ -36,7 +38,7 @@ const  CheckoutForm: FC<Props> = ({ generateToken, cart }): JSX.Element => {
                             steps.map(step => <Step key={step}><StepLabel>{step}</StepLabel></Step>)
                         }
                     </Stepper>
-                    {activeStep === steps.length ? <Conformation /> : <Form />}
+                    {activeStep === steps.length ? <Conformation /> : <Form fetchCountries={fetchCountries}/>}
                 </Paper>
             </main>
         </>

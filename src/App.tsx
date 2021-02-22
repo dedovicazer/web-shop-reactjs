@@ -79,7 +79,7 @@ function App() {
                     </Route>
 
                     <Route exact path="/checkout">
-                        <Checkout generateToken={generateToken}  cart={cart}/>
+                        <Checkout generateToken={generateToken} token={token} cart={cart} fetchCountries={fetchCountries}/>
                     </Route>
                 </Switch>
             </div>
