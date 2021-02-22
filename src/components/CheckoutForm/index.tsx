@@ -5,7 +5,7 @@ import useStyles from "./styles"
 import AdressForm from "./AddressForm";
 import PaymentForm from "./PaymentForm";
 import Conformation from "./Conformation";
-import {CartType} from "../Products/types";
+import {CartType} from "../../redux/cartSlice";
 
 type Props = {
     generateToken: (id: string) => void
@@ -18,13 +18,13 @@ const steps = [ "Shipping address", "Payment details" ];
 
 const  CheckoutForm: FC<Props> = ({ generateToken, cart, token, fetchCountries }): JSX.Element => {
 
-    const Form = () => activeStep === 0 ? <AdressForm token={token} fetchCountries={fetchCountries}/> : <PaymentForm/>
+    const Form = () => activeStep === 0 ? <AdressForm /> : <PaymentForm/>
 
     const [ activeStep, setActiveStep ] = useState(0)
     const classes = useStyles()
 
     useEffect(() => {
-        generateToken(cart.id)
+        // generateToken(cart.id)
     }, [cart])
 
     return (
@@ -38,7 +38,7 @@ const  CheckoutForm: FC<Props> = ({ generateToken, cart, token, fetchCountries }
                             steps.map(step => <Step key={step}><StepLabel>{step}</StepLabel></Step>)
                         }
                     </Stepper>
-                    {activeStep === steps.length ? <Conformation /> : <Form fetchCountries={fetchCountries}/>}
+                    {activeStep === steps.length ? <Conformation /> : <Form />}
                 </Paper>
             </main>
         </>

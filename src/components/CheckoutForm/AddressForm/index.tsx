@@ -6,15 +6,14 @@ import InputText from "../InputText";
 import SelectField from "../SelectField";
 
 type Props = {
-    fetchCountries: () => void
-    token: any
+
 };
 
 const AddressForm: FC<Props> = (fetchCountries, token): JSX.Element => {
     const methods = useForm()
 
     useEffect(()=> {
-        fetchCountries(token.id)
+
     }, [])
 
     return (
@@ -28,7 +27,7 @@ const AddressForm: FC<Props> = (fetchCountries, token): JSX.Element => {
                         <InputText name="email" label="Email" />
                         <InputText name="city" label="City" />
                         <InputText name="zip" label="ZIP / Postal code" />
-                        <SelectField title="Country" />
+                        {/*<SelectField title="Country" />*/}
                         {/*<SelectField title="Subdivision" />*/}
                         {/*<SelectField title="Options" />*/}
                     </Grid>

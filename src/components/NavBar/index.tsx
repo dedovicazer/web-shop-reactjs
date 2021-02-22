@@ -5,14 +5,17 @@ import Logo from "../../assets/commere.jpg";
 import useStyles from "./styles";
 import {ShoppingCart} from "@material-ui/icons";
 import { Link, useLocation } from 'react-router-dom';
+import {useSelector} from "react-redux";
+import {RootState} from "../../redux/store";
 
 type Props = {
-    totalItems: number
+
 };
 
-const NavBar: FC<Props> = ({ totalItems }): JSX.Element => {
+const NavBar: FC<Props> = (): JSX.Element => {
     const classes = useStyles()
     const location = useLocation()
+    const { cart } = useSelector((state:RootState) => state.rootReducer.cart)
 
     return (
         <>
@@ -26,7 +29,7 @@ const NavBar: FC<Props> = ({ totalItems }): JSX.Element => {
                     <div>
                         {
                             location.pathname === "/" &&  <IconButton component={Link} to="/cart" aria-label={"Show cart items"} color={"inherit"}>
-                                <Badge badgeContent={totalItems} color="secondary">
+                                <Badge badgeContent={cart.total_items} color="secondary">
                                     <ShoppingCart />
                                 </Badge>
                             </IconButton>
