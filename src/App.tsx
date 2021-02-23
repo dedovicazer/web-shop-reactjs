@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Products, NavBar, Cart} from './components';
+import {Products, NavBar, Cart, Checkout} from './components';
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 
 function App() {
@@ -17,7 +17,7 @@ function App() {
                     </Route>
 
                     <Route exact path="/checkout">
-                        {/*<Checkout />*/}
+                        <Checkout />
                     </Route>
                 </Switch>
             </div>

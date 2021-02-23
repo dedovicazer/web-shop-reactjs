@@ -5,26 +5,30 @@ import useStyles from "./styles"
 import AdressForm from "./AddressForm";
 import PaymentForm from "./PaymentForm";
 import Conformation from "./Conformation";
-import {CartType} from "../../redux/cartSlice";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../../redux/store";
+import {fetchCountries, generateToken} from "../../redux/selectFieldSlice";
 
 type Props = {
-    generateToken: (id: string) => void
-    cart: CartType
-    fetchCountries: () => void
-    token: any
+
 };
 
 const steps = [ "Shipping address", "Payment details" ];
 
-const  CheckoutForm: FC<Props> = ({ generateToken, cart, token, fetchCountries }): JSX.Element => {
+const  CheckoutForm: FC<Props> = (): JSX.Element => {
+    const { cart } = useSelector((state:RootState) => state.rootReducer.cart)
+    const tokenId = useSelector((state: RootState) => state.rootReducer.fieldsData.tokenId)
+    const countries  = useSelector((state: RootState) => state.rootReducer.fieldsData.countries)
+    const dispatch = useDispatch()
 
-    const Form = () => activeStep === 0 ? <AdressForm /> : <PaymentForm/>
+    const Form = () => activeStep === 0 ? <AdressForm countries={countries}/> : <PaymentForm/>
 
     const [ activeStep, setActiveStep ] = useState(0)
     const classes = useStyles()
 
     useEffect(() => {
-        // generateToken(cart.id)
+            dispatch(generateToken(cart.id!))
+            dispatch(fetchCountries(tokenId))
     }, [cart])
 
     return (
