@@ -21,7 +21,11 @@ const  CheckoutForm: FC<Props> = (): JSX.Element => {
     const countries  = useSelector((state: RootState) => state.rootReducer.fieldsData.countries)
     const dispatch = useDispatch()
 
-    const Form = () => activeStep === 0 ? <AdressForm countries={countries}/> : <PaymentForm/>
+    const countriesArray = Object.entries(countries).map(([code, name]) => ({ id: code, label: name })) // Create array from object entries
+
+    const country = Object.keys(countries)[0] // Get single value of a country
+
+    const Form = () => activeStep === 0 ? <AdressForm countries={countriesArray} country={country}/> : <PaymentForm/>
 
     const [ activeStep, setActiveStep ] = useState(0)
     const classes = useStyles()

@@ -7,9 +7,10 @@ import SelectField from "../SelectField";
 
 type Props = {
     countries: any
+    country: string
 };
 
-const AddressForm: FC<Props> = ({ countries }): JSX.Element => {
+const AddressForm: FC<Props> = ({ countries, country }): JSX.Element => {
     const methods = useForm()
     return (
         <>
@@ -22,8 +23,8 @@ const AddressForm: FC<Props> = ({ countries }): JSX.Element => {
                         <InputText name="email" label="Email"/>
                         <InputText name="city" label="City"/>
                         <InputText name="zip" label="ZIP / Postal code"/>
-                        <SelectField title="Country" countries={countries}/>
-                        {/*<SelectField title="Subdivision" />*/}
+                        <SelectField title="Country" countries={countries} country={country}/>
+                        <SelectField title="Subdivision" />
                         {/*<SelectField title="Options" />*/}
                     </Grid>
                 </form>
