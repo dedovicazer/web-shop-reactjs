@@ -4,13 +4,16 @@ import {useForm, FormProvider} from "react-hook-form";
 import {Grid} from "@material-ui/core";
 import InputText from "../InputText";
 import SelectField from "../SelectField";
+import {setCountry, setSubdivision} from "../../../redux/selectFieldSlice";
 
 type Props = {
     countries: any
     country: string
+    subdivision: string
+    subdivisions: any
 };
 
-const AddressForm: FC<Props> = ({ countries, country }): JSX.Element => {
+const AddressForm: FC<Props> = ({ countries,  subdivisions, country, subdivision }): JSX.Element => {
     const methods = useForm()
     return (
         <>
@@ -23,8 +26,8 @@ const AddressForm: FC<Props> = ({ countries, country }): JSX.Element => {
                         <InputText name="email" label="Email"/>
                         <InputText name="city" label="City"/>
                         <InputText name="zip" label="ZIP / Postal code"/>
-                        <SelectField title="Country" countries={countries} country={country}/>
-                        <SelectField title="Subdivision" />
+                        <SelectField title="Country" values={countries} value={country} setValue={setCountry}/>
+                        <SelectField title="Subdivision"  values={subdivisions} value={subdivision} setValue={setSubdivision} />
                         {/*<SelectField title="Options" />*/}
                     </Grid>
                 </form>
