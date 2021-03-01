@@ -55,7 +55,7 @@ const CheckoutForm: FC = (): JSX.Element => {
 
     const Form = () => activeStep === 0 ?
         <AddressForm countries={countriesArray} country={country} subdivisions={subdivisionsArray}
-                    subdivision={subdivision} next={next}/> : <PaymentForm token={token}/>
+                    subdivision={subdivision} next={next}/> : <PaymentForm token={token} backStep={backStep} formData={formData}/>
 
 
     return (
