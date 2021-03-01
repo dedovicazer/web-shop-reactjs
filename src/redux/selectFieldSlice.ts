@@ -9,15 +9,16 @@ const initialState: InitialStateType = {
     country: "",
     subdivision: "",
     subdivisions: [],
-    options: [],
-    tokenId: ""
+    token: {
+        id: null
+    }
 }
 
 export const selectFieldSlice = createSlice({
     name: 'fieldsData',
     initialState,
     reducers: {
-        setToken: (state: InitialStateType, action: PayloadAction<string>) => ({...state, tokenId: action.payload}),
+        setToken: (state: InitialStateType, action: PayloadAction<{id: string}>) => ({...state, token: action.payload}),
         setCountries: (state: InitialStateType, action: PayloadAction<any>) => ({...state, countries: action.payload}),
         setCountry: (state: InitialStateType, action: PayloadAction<any>) => ({...state, country: action.payload}),
         setSubdivision: (state: InitialStateType, action: PayloadAction<any>) => ({...state, subdivision: action.payload}),
@@ -43,7 +44,7 @@ export const fetchSubdivisions = (countryCode: string) => async (dispatch: Dispa
 export const generateToken = (cartId: string) => async (dispatch: Dispatch<ActionType>) => {
     try {
         const token = await commerce.checkout.generateToken(cartId, {type: 'cart'})
-        dispatch(setToken(token.id))
+        dispatch(setToken(token))
     } catch (error) {
 
     }
@@ -60,9 +61,8 @@ type InitialStateType = {
     countries: {}
     country: string
     subdivision: string
-    options: []
     subdivisions: []
-    tokenId: string
+    token: {
+        id: string | null
+    }
 }
-
-type CountriesType = {}

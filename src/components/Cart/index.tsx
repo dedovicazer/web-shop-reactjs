@@ -1,17 +1,26 @@
 import * as React from 'react';
-import {FC} from "react";
+import {FC, useEffect} from "react";
 import  {Container, Typography} from "@material-ui/core";
 import { EmptyCart, FilledCart } from "../../components"
 import useStyles from "./styles"
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../redux/store";
+import {fetchProducts} from "../../redux/productsSlice";
+import {fetchCart} from "../../redux/cartSlice";
 
 type Props = {
 
 };
 
 
+
 const Cart: FC<Props> = (): JSX.Element => {
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(fetchCart())
+    }, [])
+
     const { cart } = useSelector((state: RootState) => state.rootReducer.cart)
     const classes = useStyles()
 
