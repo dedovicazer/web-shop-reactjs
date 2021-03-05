@@ -1,12 +1,14 @@
 import { configureStore, getDefaultMiddleware, combineReducers } from '@reduxjs/toolkit'
-import {productsSlice} from "./productsSlice";
-import {cartSlice} from "./cartSlice";
-import {selectFieldSlice} from "./selectFieldSlice";
+import { productsSlice } from "./productsSlice";
+import { cartSlice } from "./cartSlice";
+import { selectFieldSlice } from "./selectFieldSlice";
+import { checkoutSlice } from "./checkoutSlice";
 
 const rootReducer = combineReducers({
     products: productsSlice.reducer,
     cart: cartSlice.reducer,
-    fieldsData: selectFieldSlice.reducer
+    fieldsData: selectFieldSlice.reducer,
+    order: checkoutSlice.reducer
 })
 
 export const store = configureStore({

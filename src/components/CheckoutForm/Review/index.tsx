@@ -8,7 +8,6 @@ type Props = {
 };
 
 const  Review: FC<Props> = ({ token }): JSX.Element => {
-    debugger
     return (
         <>
            <Typography variant="h6" gutterBottom>Order summary</Typography>

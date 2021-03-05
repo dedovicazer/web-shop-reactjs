@@ -1,20 +1,23 @@
 import * as React from 'react'
 import {FC} from "react"
-import  {Typography, Button, Divider } from "@material-ui/core"
+import {Typography, Button, Divider} from "@material-ui/core"
 import {Elements, CardElement, ElementsConsumer} from "@stripe/react-stripe-js"
 import {loadStripe} from '@stripe/stripe-js'
 import Review from "../Review"
-import {CameraAlt} from "@material-ui/icons"
-
+import {handleCaptureCheckout} from "../../../redux/checkoutSlice"
+import {useDispatch} from "react-redux";
 
 
 type Props = {
     token: any
     backStep: any
     formData: any
+    nextStep: any
 }
 
-const  PaymentForm: FC<Props> = ({ token, backStep, formData }): JSX.Element => {
+const PaymentForm: FC<Props> = ({token, backStep, formData, nextStep}): JSX.Element => {
+    const dispatch = useDispatch()
+
     const handleSubmit = async (event: React.SyntheticEvent, elements: any, stripe: any) => {
 
         event.preventDefault()
@@ -29,42 +32,60 @@ const  PaymentForm: FC<Props> = ({ token, backStep, formData }): JSX.Element => 
             const orderData = {
                 line_items: token.live.line_items,
                 customer: {
-                    fistname: formData.fistname,
+                    firstname: formData.firstname,
                     lastname: formData.lastname,
-                    email: formData.email,
-                    shipping: {
-                        name: 'Primary',
-                        street: formData.address
-                    }
-                }
+                    email: formData.email
+                },
+                shipping: {
+                    name: formData.firstname,
+                    street: formData.address,
+                    town_city: formData.city,
+                    county_state: formData.subdivision,
+                    postal_zip_code: formData.zip,
+                    country: formData.country,
+                },
+                fulfillment: {
+                    shipping_method: formData.option,
+                },
+                payment: {
+                    gateway: 'stripe',
+                    stripe: {
+                        payment_method_id: paymentMethod.id
+                    },
+                },
             }
-        }
 
-
+        dispatch(handleCaptureCheckout(token.id, orderData))
+        nextStep()
     }
-    // @ts-ignore
-    const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY)
-    return (
-        <>
-            <Review  token={token}/>
-            <Divider />
-            <Typography variant="h6" gutterBottom style={{margin: '20px 0'}}>Payment method</Typography>
-            <Elements stripe={stripePromise}>
-                <ElementsConsumer>
-                    {({elements, stripe})=> (
-                        <form onSubmit={(e) => handleSubmit(e, elements, stripe)}>
-                            <CardElement />
-                            <br/> <br/>
-                            <div style={ {display: 'flex', justifyContent: 'space-between'} }>
-                                <Button variant="outlined" onClick={()=> {backStep()}}>Back</Button>
-                                <Button type="submit"  color="primary" disabled={!stripe} variant="contained">Pay</Button>
-                            </div>
-                        </form>
-                    )}
-                </ElementsConsumer>
-            </Elements>
-        </>
-    )
 }
 
-export default  PaymentForm
+// @ts-ignore
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY)
+return (
+    <>
+        <Review token={token}/>
+        <Divider/>
+        <Typography variant="h6" gutterBottom style={{margin: '20px 0'}}>Payment method</Typography>
+        <Elements stripe={stripePromise}>
+            <ElementsConsumer>
+                {({elements, stripe}) => (
+                    <form onSubmit={(e) => handleSubmit(e, elements, stripe)}>
+                        <CardElement/>
+                        <br/> <br/>
+                        <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                            <Button variant="outlined" onClick={() => {
+                                backStep()
+                            }}>Back</Button>
+                            <Button type="submit" color="primary" disabled={!stripe}
+                                    variant="contained">Pay</Button>
+                        </div>
+                    </form>
+                )}
+            </ElementsConsumer>
+        </Elements>
+    </>
+)
+}
+
+export default PaymentForm

@@ -5,7 +5,6 @@ import { EmptyCart, FilledCart } from "../../components"
 import useStyles from "./styles"
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../redux/store";
-import {fetchProducts} from "../../redux/productsSlice";
 import {fetchCart} from "../../redux/cartSlice";
 
 type Props = {
@@ -16,6 +15,7 @@ type Props = {
 
 const Cart: FC<Props> = (): JSX.Element => {
     const dispatch = useDispatch()
+    const order = useSelector(( state:RootState ) => state.rootReducer.order)
 
     useEffect(() => {
         dispatch(fetchCart())

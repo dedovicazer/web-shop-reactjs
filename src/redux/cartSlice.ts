@@ -19,11 +19,11 @@ export const cartSlice = createSlice({
     initialState,
     reducers: {
         setCart:
-            (state: InitialStateType, action: PayloadAction<CartType>) => ({cart: action.payload})
+            (state: InitialStateType, action: PayloadAction<CartType>) => ({...state, cart: action.payload})
     }
 })
 
-const { setCart } = cartSlice.actions
+export const { setCart } = cartSlice.actions
 
 export const fetchCart = () => async (dispatch: Dispatch<ActionType>) => {
     const cart  = await commerce.cart.retrieve()

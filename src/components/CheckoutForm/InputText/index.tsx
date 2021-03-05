@@ -18,7 +18,7 @@ const InputText: FC<Props> = ({name, label, required}): JSX.Element => {
                         fullWidth
                         name={name}
                         label={label}
-                        required={required}
+                        required
             />
 
         </Grid>

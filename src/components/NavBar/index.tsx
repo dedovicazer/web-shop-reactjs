@@ -22,8 +22,10 @@ const NavBar: FC<Props> = (): JSX.Element => {
             <AppBar position="fixed" className={classes.appBar} color="inherit">
                 <Toolbar>
                     <Typography variant="h6" className={classes.title} color="inherit">
-                        <img src={Logo} alt="Commerce.js" width={25} className={classes.image}/>
-                        Commerce.js
+                        <Link to="/">
+                            <img src={Logo} alt="Commerce.js" width={70} className={classes.image}/>
+                            Commerce.js
+                        </Link>
                     </Typography>
                     <div className={classes.grow}/>
                     <div>
