@@ -31,7 +31,7 @@ export const handleCaptureCheckout = (tokenId: string, newOrder: any) => async (
         dispatch(setOrder(incomingOrder))
         dispatch(refreshCart())
     } catch (error) {
-       dispatch(setErrorMessage(error.data.error.message))
+       console.log(error)
 
     }
 

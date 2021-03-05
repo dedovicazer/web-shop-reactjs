@@ -1,7 +1,6 @@
-import {createSlice, PayloadAction, createAsyncThunk} from '@reduxjs/toolkit';
-import {commerce} from "../lib/commerce";
-import {Dispatch} from "react";
-import {ProductType} from "./productsSlice";
+import {createSlice, PayloadAction, } from '@reduxjs/toolkit'
+import {commerce} from "../lib/commerce"
+import {Dispatch} from "react"
 
 
 const initialState: InitialStateType = {

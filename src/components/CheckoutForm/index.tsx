@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {FC, useEffect, useState} from "react"
-import {Paper, Stepper, Step, StepLabel, Typography, CircularProgress, Divider, Button} from '@material-ui/core'
+import {Paper, Stepper, Step, StepLabel, Typography, CssBaseline} from '@material-ui/core'
 import useStyles from "./styles"
 import AddressForm from "./AddressForm";
 import PaymentForm from "./PaymentForm";
@@ -78,6 +78,7 @@ const CheckoutForm: FC = (): JSX.Element => {
 
     return (
         <>
+            <CssBaseline />
             <div className={classes.toolbar}/>
             <main className={classes.layout}>
                 <Paper className={classes.paper}>
@@ -87,7 +88,7 @@ const CheckoutForm: FC = (): JSX.Element => {
                             steps.map(step => <Step key={step}><StepLabel>{step}</StepLabel></Step>)
                         }
                     </Stepper>
-                    {activeStep === steps.length ? <Conformation/> : <Form/>}
+                    {activeStep === steps.length ? <Conformation order={order} /> : <Form />}
                 </Paper>
             </main>
         </>
