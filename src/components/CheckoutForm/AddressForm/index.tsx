@@ -4,14 +4,14 @@ import {useForm, FormProvider} from "react-hook-form";
 import {Button, Grid} from "@material-ui/core";
 import InputText from "../InputText";
 import SelectField from "../SelectField";
-import {setCountry, setSubdivision, setOption} from "../../../redux/selectFieldSlice";
+import {setCountry, setSubdivision, setOption, SelectFieldDataType} from "../../../redux/selectFieldSlice";
 import {Link} from "react-router-dom";
 
 type Props = {
-    countries: {}
+    countries: SelectFieldDataType<string, string>
     country: string
     subdivision: string
-    subdivisions: any
+    subdivisions: SelectFieldDataType<string, string>
     option: string
     options: any
     next: ({}) => void

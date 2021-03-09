@@ -1,11 +1,7 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {commerce} from "../lib/commerce";
 import {Dispatch} from "react";
 import {CartType} from "./cartSlice";
-
-
-
-
 
 
 const initialState: InitialStateType = {
@@ -17,21 +13,24 @@ export const checkoutSlice = createSlice({
     name: 'order',
     initialState,
     reducers: {
-        setOrder: (state: InitialStateType, action:PayloadAction<any>) => ({ ...state, order: action.payload }),
-        setErrorMessage: (state: InitialStateType, action:PayloadAction<string>) => ({ ...state, errorMessage: action.payload }),
-        setCart:(state: InitialStateType, action: PayloadAction<CartType>) => ({...state, cart: action.payload})
+        setOrder: (state: InitialStateType, action: PayloadAction<OrderType>) => ({...state, order: action.payload}),
+        setErrorMessage: (state: InitialStateType, action: PayloadAction<string>) => ({
+            ...state,
+            errorMessage: action.payload
+        }),
+        setCart: (state: InitialStateType, action: PayloadAction<CartType>) => ({...state, cart: action.payload})
     }
 })
 
-const { setOrder, setErrorMessage, setCart } = checkoutSlice.actions
+const {setOrder, setErrorMessage, setCart} = checkoutSlice.actions
 
-export const handleCaptureCheckout = (tokenId: string, newOrder: any) => async (dispatch: Dispatch<ActionType>) => {
+export const handleCaptureCheckout = (tokenId: string, newOrder: OrderType) => async (dispatch: Dispatch<ActionType>) => {
     try {
         const incomingOrder = await commerce.checkout.capture(tokenId, newOrder)
         dispatch(setOrder(incomingOrder))
         dispatch(refreshCart())
     } catch (error) {
-       console.log(error)
+        console.log(error)
 
     }
 
@@ -44,16 +43,41 @@ const refreshCart = () => async (dispatch: Dispatch<any>) => {
 }
 
 
-export default checkoutSlice.reducer
-
 // Types
 
 type ActionType = ReturnType<typeof setOrder>
-                  | ReturnType<typeof setCart>
-                  | ReturnType<typeof refreshCart>
+    | ReturnType<typeof setCart>
+    | ReturnType<typeof refreshCart>
 
 
 type InitialStateType = {
     order: {}
     errorMessage: string
+}
+
+export type OrderType = {
+    line_items: []
+    customer: {
+        firstname: string
+        lastname: string
+        email: string
+    },
+    shipping: {
+        name: string
+        street: string
+        town_city: string,
+        county_state: string,
+        postal_zip_code: string,
+        country: string,
+    },
+    fulfillment: {
+        shipping_method: string,
+    },
+    payment: {
+        gateway: string
+        stripe: {
+            payment_method_id: string
+        },
+    },
+
 }

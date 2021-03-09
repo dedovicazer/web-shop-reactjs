@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import {commerce} from "../lib/commerce";
 import {Dispatch} from "react";
+import {PriceType} from "./selectFieldSlice";
 
 
 
@@ -35,7 +36,7 @@ export type ProductType = {
     name: string
     description: string
     media: {source: string}
-    price: {formatted: string}
+    price: PriceType
     line_total: {formatted_width_symbol: string}
     quantity: number
 }
