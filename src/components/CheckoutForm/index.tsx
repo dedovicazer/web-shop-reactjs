@@ -1,3 +1,4 @@
+// @ts-nocheck :
 import * as React from 'react';
 import {FC, useEffect, useState} from "react"
 import {Paper, Stepper, Step, StepLabel, Typography, CssBaseline} from '@material-ui/core'
